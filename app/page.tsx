@@ -6,6 +6,7 @@ import NewsletterForm from '@/components/forms/NewsletterForm'
 import dbConnect from '@/lib/mongodb'
 import Blog from '@/models/Blog'
 import Product from '@/models/Product'
+import User from '@/models/User'
 
 export const metadata: Metadata = {
   title: 'Home',
@@ -19,21 +20,37 @@ async function getFeaturedBlogs() {
   try {
     await dbConnect()
     const blogs = await Blog.find({ status: 'published' })
-      .sort({ publishedAt: -1 })
+      .sort({ publishedAt: -1, createdAt: -1 })
       .limit(3)
-      .populate('author', 'name avatar')
-      .select('title slug excerpt category featuredImage readingTime')
+      .select('title slug excerpt category featuredImage readingTime author')
       .lean()
     
-    return blogs.map((blog: any) => ({
-      _id: blog._id.toString(),
-      title: blog.title,
-      slug: blog.slug,
-      excerpt: blog.excerpt,
-      category: blog.category,
-      featuredImage: blog.featuredImage,
-      readingTime: blog.readingTime || 5,
-    }))
+    // Manually fetch authors
+    const authorIds = blogs.map((b: any) => b.author).filter(Boolean)
+    let authors: any[] = []
+    if (authorIds.length > 0) {
+      authors = await User.find({ _id: { $in: authorIds } })
+        .select('name avatar')
+        .lean()
+    }
+    const authorMap = new Map(authors.map((a: any) => [a._id.toString(), a]))
+    
+    return blogs.map((blog: any) => {
+      const author = blog.author ? authorMap.get(blog.author.toString()) : null
+      return {
+        _id: blog._id.toString(),
+        title: blog.title,
+        slug: blog.slug,
+        excerpt: blog.excerpt,
+        category: blog.category,
+        featuredImage: blog.featuredImage,
+        readingTime: blog.readingTime || 5,
+        author: {
+          name: author?.name || 'Abhinav',
+          avatar: author?.avatar || '',
+        },
+      }
+    })
   } catch (error) {
     console.error('Error fetching blogs:', error)
     return []
