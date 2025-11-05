@@ -12,7 +12,7 @@ export interface IBlog {
   content: string
   featuredImage: string
   imageAlt: string
-  category: 'Political Analysis' | 'Business Policy' | 'Economic Strategy' | 'Global Affairs'
+  category: 'AI Tools & Platforms' | 'AI Prompts & Techniques' | 'AI Automation' | 'AI Money Making' | 'AI Agents' | 'ChatGPT & LLMs' | 'AI for Business' | 'AI Guides & Tutorials'
   tags: string[]
   sections: {
     type: 'intro' | 'analysis' | 'data' | 'takeaway' | 'conclusion'
@@ -77,7 +77,16 @@ const BlogSchema = new Schema<IBlog>(
     imageAlt: String,
     category: {
       type: String,
-      enum: ['Political Analysis', 'Business Policy', 'Economic Strategy', 'Global Affairs'],
+      enum: [
+        'AI Tools & Platforms',
+        'AI Prompts & Techniques',
+        'AI Automation',
+        'AI Money Making',
+        'AI Agents',
+        'ChatGPT & LLMs',
+        'AI for Business',
+        'AI Guides & Tutorials'
+      ],
       required: true,
     },
     tags: [String],
