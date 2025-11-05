@@ -52,10 +52,18 @@ async function getBlogs(searchParams: any) {
 
     // Fetch blogs from database
     const blogs = await Blog.find(query)
-      .sort({ publishedAt: -1 })
+      .sort({ publishedAt: -1, createdAt: -1 })
       .populate('author', 'name email')
-      .select('title slug excerpt category tags featuredImage imageAlt publishedAt readingTime views')
+      .select('title slug excerpt category tags featuredImage imageAlt publishedAt createdAt readingTime views')
       .lean()
+
+    console.log('📊 Blogs found:', blogs.length)
+    console.log('📋 First blog:', blogs[0] ? {
+      title: blogs[0].title,
+      category: blogs[0].category,
+      status: 'published',
+      publishedAt: blogs[0].publishedAt
+    } : 'No blogs')
 
     // Transform data for frontend
     return blogs.map((blog: any) => ({
@@ -67,11 +75,11 @@ async function getBlogs(searchParams: any) {
       tags: blog.tags || [],
       featuredImage: blog.featuredImage || '/images/blog-placeholder.jpg',
       imageAlt: blog.imageAlt || blog.title,
-      publishedAt: blog.publishedAt,
+      publishedAt: blog.publishedAt || blog.createdAt,
       readingTime: blog.readingTime || 5,
       views: blog.views || 0,
       author: {
-        name: blog.author?.name || 'AI for Everyone',
+        name: blog.author?.name || 'Abhinav',
         avatar: blog.author?.avatar || '',
       },
     }))
