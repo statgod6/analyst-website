@@ -54,8 +54,7 @@ async function getBlogs(searchParams: any) {
     // Fetch blogs from database
     const blogs = await Blog.find(query)
       .sort({ publishedAt: -1, createdAt: -1 })
-      .populate('author', 'name email')
-      .select('title slug excerpt category tags featuredImage imageAlt publishedAt createdAt readingTime views')
+      .select('title slug excerpt category tags featuredImage imageAlt publishedAt createdAt readingTime views author')
       .lean()
 
     console.log('📊 Blogs found:', blogs.length)
@@ -66,24 +65,38 @@ async function getBlogs(searchParams: any) {
       publishedAt: blogs[0].publishedAt
     } : 'No blogs')
 
+    // Manually fetch authors if needed
+    const blogIds = blogs.map((b: any) => b.author).filter(Boolean)
+    let authors: any[] = []
+    if (blogIds.length > 0) {
+      authors = await User.find({ _id: { $in: blogIds } })
+        .select('name email')
+        .lean()
+    }
+    
+    const authorMap = new Map(authors.map((a: any) => [a._id.toString(), a]))
+
     // Transform data for frontend
-    return blogs.map((blog: any) => ({
-      _id: blog._id.toString(),
-      title: blog.title,
-      slug: blog.slug,
-      excerpt: blog.excerpt || blog.title.substring(0, 150) + '...',
-      category: blog.category,
-      tags: blog.tags || [],
-      featuredImage: blog.featuredImage || '/images/blog-placeholder.jpg',
-      imageAlt: blog.imageAlt || blog.title,
-      publishedAt: blog.publishedAt || blog.createdAt,
-      readingTime: blog.readingTime || 5,
-      views: blog.views || 0,
-      author: {
-        name: blog.author?.name || 'Abhinav',
-        avatar: blog.author?.avatar || '',
-      },
-    }))
+    return blogs.map((blog: any) => {
+      const author = blog.author ? authorMap.get(blog.author.toString()) : null
+      return {
+        _id: blog._id.toString(),
+        title: blog.title,
+        slug: blog.slug,
+        excerpt: blog.excerpt || blog.title.substring(0, 150) + '...',
+        category: blog.category,
+        tags: blog.tags || [],
+        featuredImage: blog.featuredImage || '/images/blog-placeholder.jpg',
+        imageAlt: blog.imageAlt || blog.title,
+        publishedAt: blog.publishedAt || blog.createdAt,
+        readingTime: blog.readingTime || 5,
+        views: blog.views || 0,
+        author: {
+          name: author?.name || 'Abhinav',
+          avatar: author?.avatar || '',
+        },
+      }
+    })
   } catch (error) {
     console.error('Error fetching blogs:', error)
     return []
