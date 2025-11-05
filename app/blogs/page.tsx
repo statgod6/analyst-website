@@ -6,6 +6,7 @@ import BlogFilters from '@/components/blog/BlogFilters'
 import DatabaseError from '@/components/DatabaseError'
 import dbConnect from '@/lib/mongodb'
 import Blog from '@/models/Blog'
+import User from '@/models/User'
 
 export const metadata: Metadata = {
   title: 'AI Guides & Tips Blog | Learn AI for Everyone',
