@@ -19,10 +19,14 @@ export async function GET(request: NextRequest) {
 
     if (category) {
       const categoryMap: { [key: string]: string } = {
-        'political-analysis': 'Political Analysis',
-        'business-policy': 'Business Policy',
-        'economic-strategy': 'Economic Strategy',
-        'global-affairs': 'Global Affairs',
+        'ai-tools-platforms': 'AI Tools & Platforms',
+        'ai-prompts-techniques': 'AI Prompts & Techniques',
+        'ai-automation': 'AI Automation',
+        'ai-money-making': 'AI Money Making',
+        'ai-agents': 'AI Agents',
+        'chatgpt-llms': 'ChatGPT & LLMs',
+        'ai-for-business': 'AI for Business',
+        'ai-guides-tutorials': 'AI Guides & Tutorials',
       }
       query.category = categoryMap[category]
     }
