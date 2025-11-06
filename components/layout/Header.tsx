@@ -21,7 +21,7 @@ const Header = () => {
       <nav className="container-custom">
         <div className="flex justify-between items-center h-16 md:h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center">
             <Image 
               src="/logo.png" 
               alt="AI for Everyone Logo" 
@@ -31,6 +31,13 @@ const Header = () => {
               priority
             />
           </Link>
+
+          {/* Brand Name - Center */}
+          <div className="absolute left-1/2 transform -translate-x-1/2">
+            <span className="text-lg md:text-2xl font-bold text-primary whitespace-nowrap">
+              AI for Everyone
+            </span>
+          </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
