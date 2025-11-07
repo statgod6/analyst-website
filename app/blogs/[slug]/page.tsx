@@ -30,7 +30,7 @@ async function getBlogBySlug(slug: string) {
     const blog: any = blogData
 
     // Manually fetch author if exists
-    let authorData = null
+    let authorData: any = null
     if (blog.author) {
       authorData = await User.findById(blog.author)
         .select('name email avatar bio')
@@ -55,11 +55,11 @@ async function getBlogBySlug(slug: string) {
       readingTime: blog.readingTime || 5,
       views: blog.views || 0,
       author: {
-        _id: authorData?._id?.toString() || 'default',
-        name: authorData?.name || 'Abhinav',
-        email: authorData?.email,
-        avatar: authorData?.avatar || '/images/author-abhinav.jpg',
-        bio: authorData?.bio || 'Dr. Abhinav is a dedicated scholar, educator, and researcher specializing in marketing, analytics, and artificial intelligence. As both a PhD and professor, he brings a unique blend of academic rigor and practical insight to his work, guiding students and professionals toward data-driven decision-making in an increasingly digital world.\n\nPassionate about making knowledge accessible to everyone, Dr. Abhinav\'s mission is to empower individuals with the tools and understanding needed to thrive in the age of AI and analytics. His contributions to the field have been recognized with numerous awards for excellence in research, teaching, and innovation.\n\nDriven by curiosity and purpose, he continues to explore how technology, data, and human behavior intersect to shape the future of marketing and education.',
+        _id: (authorData as any)?._id?.toString() || 'default',
+        name: (authorData as any)?.name || 'Abhinav',
+        email: (authorData as any)?.email,
+        avatar: (authorData as any)?.avatar || '/images/author-abhinav.jpg',
+        bio: (authorData as any)?.bio || 'Dr. Abhinav is a dedicated scholar, educator, and researcher specializing in marketing, analytics, and artificial intelligence. As both a PhD and professor, he brings a unique blend of academic rigor and practical insight to his work, guiding students and professionals toward data-driven decision-making in an increasingly digital world.\n\nPassionate about making knowledge accessible to everyone, Dr. Abhinav\'s mission is to empower individuals with the tools and understanding needed to thrive in the age of AI and analytics. His contributions to the field have been recognized with numerous awards for excellence in research, teaching, and innovation.\n\nDriven by curiosity and purpose, he continues to explore how technology, data, and human behavior intersect to shape the future of marketing and education.',
       },
       sections: blog.sections || [],
       internalLinks: blog.internalLinks || [],
@@ -85,10 +85,7 @@ async function getRelatedBlogs(currentBlogId: string, category: string) {
         { category: { $ne: category } }
       ]
     })
-      .sort([
-        { category: category ? -1 : 1 }, // Prioritize same category
-        { publishedAt: -1 }
-      ])
+      .sort({ publishedAt: -1 })
       .limit(3)
       .select('title slug excerpt category tags featuredImage publishedAt createdAt readingTime views author')
       .lean()
