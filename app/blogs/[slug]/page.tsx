@@ -8,6 +8,7 @@ import AuthorImage from '@/components/blog/AuthorImage'
 import DatabaseError from '@/components/DatabaseError'
 import dbConnect from '@/lib/mongodb'
 import Blog from '@/models/Blog'
+import User from '@/models/User'
 
 // Enable ISR with 60 second revalidation
 export const revalidate = 60
@@ -18,7 +19,7 @@ async function getBlogBySlug(slug: string) {
     await dbConnect()
 
     const blogData = await Blog.findOne({ slug, status: 'published' })
-      .populate('author', 'name email')
+      .select('title slug metaTitle metaDescription keywords ogImage excerpt content featuredImage imageAlt category tags publishedAt createdAt readingTime views author sections internalLinks externalReferences')
       .lean()
 
     if (!blogData || Array.isArray(blogData)) {
@@ -28,8 +29,13 @@ async function getBlogBySlug(slug: string) {
     // Type assertion to ensure TypeScript knows this is a single document
     const blog: any = blogData
 
-    // Increment view count
-    await Blog.findByIdAndUpdate(blog._id, { $inc: { views: 1 } })
+    // Manually fetch author if exists
+    let authorData = null
+    if (blog.author) {
+      authorData = await User.findById(blog.author)
+        .select('name email avatar bio')
+        .lean()
+    }
 
     return {
       _id: blog._id.toString(),
@@ -47,13 +53,13 @@ async function getBlogBySlug(slug: string) {
       tags: blog.tags || [],
       publishedAt: blog.publishedAt || blog.createdAt,
       readingTime: blog.readingTime || 5,
-      views: (blog.views || 0) + 1,
+      views: blog.views || 0,
       author: {
-        _id: blog.author?._id?.toString() || 'default',
-        name: blog.author?.name || 'Abhinav',
-        email: blog.author?.email,
-        avatar: blog.author?.avatar || '/images/author-abhinav.jpg',
-        bio: blog.author?.bio || 'Dr. Abhinav is a dedicated scholar, educator, and researcher specializing in marketing, analytics, and artificial intelligence. As both a PhD and professor, he brings a unique blend of academic rigor and practical insight to his work, guiding students and professionals toward data-driven decision-making in an increasingly digital world.\n\nPassionate about making knowledge accessible to everyone, Dr. Abhinav\'s mission is to empower individuals with the tools and understanding needed to thrive in the age of AI and analytics. His contributions to the field have been recognized with numerous awards for excellence in research, teaching, and innovation.\n\nDriven by curiosity and purpose, he continues to explore how technology, data, and human behavior intersect to shape the future of marketing and education.',
+        _id: authorData?._id?.toString() || 'default',
+        name: authorData?.name || 'Abhinav',
+        email: authorData?.email,
+        avatar: authorData?.avatar || '/images/author-abhinav.jpg',
+        bio: authorData?.bio || 'Dr. Abhinav is a dedicated scholar, educator, and researcher specializing in marketing, analytics, and artificial intelligence. As both a PhD and professor, he brings a unique blend of academic rigor and practical insight to his work, guiding students and professionals toward data-driven decision-making in an increasingly digital world.\n\nPassionate about making knowledge accessible to everyone, Dr. Abhinav\'s mission is to empower individuals with the tools and understanding needed to thrive in the age of AI and analytics. His contributions to the field have been recognized with numerous awards for excellence in research, teaching, and innovation.\n\nDriven by curiosity and purpose, he continues to explore how technology, data, and human behavior intersect to shape the future of marketing and education.',
       },
       sections: blog.sections || [],
       internalLinks: blog.internalLinks || [],
@@ -70,51 +76,53 @@ async function getRelatedBlogs(currentBlogId: string, category: string) {
   try {
     await dbConnect()
 
-    // First, try to get blogs from the same category
-    let relatedBlogs = await Blog.find({
+    // Single optimized query using $or to get all 3 blogs at once
+    const relatedBlogs = await Blog.find({
       _id: { $ne: currentBlogId },
-      category,
-      status: 'published'
+      status: 'published',
+      $or: [
+        { category: category },
+        { category: { $ne: category } }
+      ]
     })
-      .sort({ publishedAt: -1 })
+      .sort([
+        { category: category ? -1 : 1 }, // Prioritize same category
+        { publishedAt: -1 }
+      ])
       .limit(3)
-      .populate('author', 'name')
-      .select('title slug excerpt category tags featuredImage publishedAt readingTime views')
+      .select('title slug excerpt category tags featuredImage publishedAt createdAt readingTime views author')
       .lean()
 
-    // If we don't have 3 blogs from the same category, get more from other categories
-    if (relatedBlogs.length < 3) {
-      const additionalBlogs = await Blog.find({
-        _id: { $ne: currentBlogId },
-        category: { $ne: category },
-        status: 'published'
-      })
-        .sort({ publishedAt: -1 })
-        .limit(3 - relatedBlogs.length)
-        .populate('author', 'name')
-        .select('title slug excerpt category tags featuredImage publishedAt readingTime views')
+    // Manually fetch authors for all related blogs
+    const authorIds = relatedBlogs.map((b: any) => b.author).filter(Boolean)
+    let authors: any[] = []
+    if (authorIds.length > 0) {
+      authors = await User.find({ _id: { $in: authorIds } })
+        .select('name avatar bio')
         .lean()
-
-      relatedBlogs = [...relatedBlogs, ...additionalBlogs]
     }
+    const authorMap = new Map(authors.map((a: any) => [a._id.toString(), a]))
 
-    return relatedBlogs.map((blog: any) => ({
-      _id: blog._id.toString(),
-      title: blog.title,
-      slug: blog.slug,
-      excerpt: blog.excerpt || blog.title.substring(0, 150) + '...',
-      category: blog.category,
-      tags: blog.tags || [],
-      featuredImage: blog.featuredImage || '/images/blog-placeholder.jpg',
-      publishedAt: blog.publishedAt || blog.createdAt,
-      readingTime: blog.readingTime || 5,
-      views: blog.views || 0,
-      author: {
-        name: blog.author?.name || 'Abhinav',
-        avatar: blog.author?.avatar || '',
-        bio: blog.author?.bio || 'Dr. Abhinav is a dedicated scholar, educator, and researcher specializing in marketing, analytics, and artificial intelligence.',
-      },
-    }))
+    return relatedBlogs.map((blog: any) => {
+      const author = blog.author ? authorMap.get(blog.author.toString()) : null
+      return {
+        _id: blog._id.toString(),
+        title: blog.title,
+        slug: blog.slug,
+        excerpt: blog.excerpt || blog.title.substring(0, 150) + '...',
+        category: blog.category,
+        tags: blog.tags || [],
+        featuredImage: blog.featuredImage || '/images/blog-placeholder.jpg',
+        publishedAt: blog.publishedAt || blog.createdAt,
+        readingTime: blog.readingTime || 5,
+        views: blog.views || 0,
+        author: {
+          name: author?.name || 'Abhinav',
+          avatar: author?.avatar || '',
+          bio: author?.bio || 'Dr. Abhinav is a dedicated scholar, educator, and researcher specializing in marketing, analytics, and artificial intelligence.',
+        },
+      }
+    })
   } catch (error) {
     console.error('Error fetching related blogs:', error)
     // Return empty array instead of crashing
