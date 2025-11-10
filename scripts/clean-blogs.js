@@ -85,6 +85,24 @@ async function cleanBlogs() {
       console.log('\n🗑️  Deleting all draft blogs...')
       const result = await Blog.deleteMany({ status: 'draft' })
       console.log(`✅ Deleted ${result.deletedCount} draft blog posts\n`)
+    } else if (args.includes('--normalize-categories')) {
+      console.log('\n🛠️  Normalizing blog categories to AI-only...')
+      const allowedCategories = [
+        'AI Tools & Platforms',
+        'AI Prompts & Techniques',
+        'AI Automation',
+        'AI Money Making',
+        'AI Agents',
+        'ChatGPT & LLMs',
+        'AI for Business',
+        'AI Guides & Tutorials'
+      ]
+      const defaultCategory = 'AI Guides & Tutorials'
+      const normalizeResult = await Blog.updateMany(
+        { category: { $nin: allowedCategories } },
+        { $set: { category: defaultCategory } }
+      )
+      console.log(`✅ Updated ${normalizeResult.modifiedCount} blogs to "${defaultCategory}" for non-AI categories`)
     } else {
       console.log('\n💡 Usage:')
       console.log('   To view all blogs:')
@@ -99,7 +117,10 @@ async function cleanBlogs() {
       console.log('   To delete all draft blogs:')
       console.log('   → node scripts/clean-blogs.js --delete-drafts')
       console.log('')
-      console.log('⚠️  WARNING: Deletion is permanent and cannot be undone!')
+      console.log('   To normalize categories to AI-only:')
+      console.log('   → node scripts/clean-blogs.js --normalize-categories')
+      console.log('')
+      console.log('⚠️  WARNING: Deletion or normalization modifies data and cannot be undone!')
     }
 
     await mongoose.connection.close()
