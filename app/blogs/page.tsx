@@ -152,10 +152,15 @@ export default async function BlogsPage({
   return (
     <>
       {/* Page Header */}
-      <section className="bg-gradient-to-br from-primary to-secondary text-white py-16">
-        <div className="container-custom">
+      <section className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white py-16 relative overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0 overflow-hidden opacity-30">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-500 rounded-full filter blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-pink-500 rounded-full filter blur-3xl"></div>
+        </div>
+        <div className="container-custom relative z-10">
           <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">
-            AI Guides & Learning Resources
+            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">AI Guides & Learning Resources</span>
           </h1>
           <p className="text-xl text-gray-200 max-w-3xl">
             Practical tutorials, tips, and strategies to master AI tools and boost your productivity and income.
@@ -195,10 +200,14 @@ export default async function BlogsPage({
       </section>
 
       {/* Newsletter CTA */}
-      <section className="section-padding bg-primary text-white">
-        <div className="container-custom text-center">
+      <section className="section-padding bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white relative overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden opacity-30">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-500 rounded-full filter blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-pink-500 rounded-full filter blur-3xl"></div>
+        </div>
+        <div className="container-custom text-center relative z-10">
           <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">
-            Never Miss an AI Update
+            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Never Miss an AI Update</span>
           </h2>
           <p className="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
             Get weekly AI tips, prompts, and strategies delivered to your inbox.

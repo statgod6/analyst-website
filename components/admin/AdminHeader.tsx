@@ -48,11 +48,11 @@ export default function AdminHeader({ onMenuClick }: AdminHeaderProps) {
           </button>
           
           <div className="flex items-center gap-3">
-            <div className="h-9 w-9 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center shadow-md">
+            <div className="h-9 w-9 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-500 rounded-lg flex items-center justify-center shadow-md">
               <span className="text-lg font-serif font-bold text-white">S</span>
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-base font-bold text-gray-900">Admin Dashboard</h1>
+              <h1 className="text-base font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">Admin Dashboard</h1>
               <p className="text-xs text-gray-500">Content Management System</p>
             </div>
           </div>
@@ -66,7 +66,7 @@ export default function AdminHeader({ onMenuClick }: AdminHeaderProps) {
               onClick={() => setShowUserMenu(!showUserMenu)}
               className="flex items-center gap-3 px-3 py-2 hover:bg-gray-50 rounded-lg transition-colors border border-transparent hover:border-gray-200"
             >
-              <div className="h-9 w-9 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center shadow-md">
+              <div className="h-9 w-9 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-500 rounded-full flex items-center justify-center shadow-md">
                 <User className="h-5 w-5 text-white" />
               </div>
               <div className="hidden sm:block text-left">

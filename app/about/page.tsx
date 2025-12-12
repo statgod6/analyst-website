@@ -110,8 +110,13 @@ export default function AboutPage() {
       />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary to-secondary text-white py-20">
-        <div className="container-custom">
+      <section className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white py-20 relative overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0 overflow-hidden opacity-30">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-500 rounded-full filter blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-pink-500 rounded-full filter blur-3xl"></div>
+        </div>
+        <div className="container-custom relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <div className="mx-auto mb-6 flex items-center justify-center">
               <img
@@ -121,7 +126,7 @@ export default function AboutPage() {
               />
             </div>
             <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">
-              Dr. Abhinav
+              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Dr. Abhinav</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-200 mb-6">
               PhD & Professor | Marketing, Analytics & AI
@@ -136,8 +141,8 @@ export default function AboutPage() {
       {/* Professional Background */}
       <section className="section-padding">
         <div className="container-custom max-w-4xl">
-          <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-8">
-            Our Mission
+          <h2 className="text-3xl md:text-4xl font-serif font-bold mb-8">
+            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">Our Mission</span>
           </h2>
           <div className="prose prose-lg max-w-none">
             <p className="text-gray-700 text-lg mb-6">
@@ -157,8 +162,8 @@ export default function AboutPage() {
       <section className="section-padding bg-gray-50">
         <div className="container-custom">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
-              What We Offer
+            <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">
+              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">What We Offer</span>
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Comprehensive AI resources to accelerate your learning and success
@@ -185,8 +190,8 @@ export default function AboutPage() {
       {/* Experience Timeline */}
       <section className="section-padding">
         <div className="container-custom max-w-4xl">
-          <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-12">
-            Our Journey
+          <h2 className="text-3xl md:text-4xl font-serif font-bold mb-12">
+            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">Our Journey</span>
           </h2>
 
           <div className="space-y-8">
@@ -214,8 +219,8 @@ export default function AboutPage() {
       {/* Education */}
       <section className="section-padding bg-gray-50">
         <div className="container-custom max-w-4xl">
-          <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-8">
-            Certifications & Learning
+          <h2 className="text-3xl md:text-4xl font-serif font-bold mb-8">
+            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">Certifications & Learning</span>
           </h2>
 
           <div className="grid md:grid-cols-2 gap-6">
@@ -237,8 +242,8 @@ export default function AboutPage() {
       {/* Publications */}
       <section className="section-padding">
         <div className="container-custom max-w-4xl">
-          <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-8">
-            Featured Resources & Guides
+          <h2 className="text-3xl md:text-4xl font-serif font-bold mb-8">
+            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">Featured Resources & Guides</span>
           </h2>
 
           <div className="space-y-4">
@@ -262,8 +267,8 @@ export default function AboutPage() {
       {/* Media & Speaking */}
       <section className="section-padding bg-gray-50">
         <div className="container-custom max-w-4xl">
-          <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-8">
-            Community & Engagement
+          <h2 className="text-3xl md:text-4xl font-serif font-bold mb-8">
+            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">Community & Engagement</span>
           </h2>
 
           <div className="grid md:grid-cols-2 gap-6">
@@ -310,8 +315,8 @@ export default function AboutPage() {
       <section className="section-padding">
         <div className="container-custom max-w-4xl">
           <div className="card p-12 text-center bg-gradient-to-br from-gray-50 to-white">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
-              Let's Connect
+            <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">
+              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">Let's Connect</span>
             </h2>
             <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
               Have questions about AI, want to collaborate, or need custom AI solutions? We'd love to hear from you!

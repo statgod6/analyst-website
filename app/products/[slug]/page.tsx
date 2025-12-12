@@ -157,8 +157,8 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
                 </span>
               </div>
 
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-primary mb-4 md:mb-5 leading-tight">
-                {product.name}
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold mb-4 md:mb-5 leading-tight">
+                <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">{product.name}</span>
               </h1>
 
               {/* Rating */}
@@ -303,10 +303,10 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
           <div className="mt-12 md:mt-16">
             <div className="max-w-4xl mx-auto">
               <div className="mb-8 text-center">
-                <h2 className="text-2xl md:text-3xl font-serif font-bold text-primary mb-3">
-                  Complete Overview
+                <h2 className="text-2xl md:text-3xl font-serif font-bold mb-3">
+                  <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">Complete Overview</span>
                 </h2>
-                <div className="w-24 h-1 bg-accent mx-auto rounded-full"></div>
+                <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto rounded-full"></div>
               </div>
               
               <div className="card p-6 md:p-10 lg:p-12">
@@ -322,8 +322,8 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
           {product.testimonials && product.testimonials.length > 0 ? (
             <div className="mt-20 bg-gradient-to-br from-blue-50 to-indigo-50 -mx-4 px-4 py-16 rounded-2xl">
               <div className="text-center mb-12">
-                <h2 className="text-4xl font-serif font-bold text-primary mb-4">
-                  Trusted by Investors Worldwide
+                <h2 className="text-4xl font-serif font-bold mb-4">
+                  <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">Trusted by Investors Worldwide</span>
                 </h2>
                 <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                   See what our customers are saying about this product

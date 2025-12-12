@@ -27,12 +27,12 @@ export default function BlogCard({ blog }: BlogCardProps) {
       {/* Content */}
       <div className="p-6 flex flex-col flex-1">
         {/* Category Badge */}
-        <div className="text-sm text-accent font-semibold mb-3">
+        <div className="text-sm font-semibold mb-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">
           {blog.category}
         </div>
 
         {/* Title */}
-        <h3 className="text-xl font-serif font-bold mb-3 group-hover:text-primary transition-colors">
+        <h3 className="text-xl font-serif font-bold mb-3 group-hover:bg-gradient-to-r group-hover:from-purple-600 group-hover:to-pink-500 group-hover:bg-clip-text group-hover:text-transparent transition-all">
           <Link href={`/blogs/${blog.slug}`}>
             {blog.title}
           </Link>
@@ -64,7 +64,7 @@ export default function BlogCard({ blog }: BlogCardProps) {
           {blog.tags.slice(0, 3).map((tag) => (
             <span
               key={tag}
-              className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-md"
+              className="px-2 py-1 bg-gradient-to-r from-purple-50 to-pink-50 text-purple-600 text-xs rounded-md font-medium"
             >
               #{tag}
             </span>

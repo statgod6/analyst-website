@@ -245,13 +245,13 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           </Link>
 
           {/* Category Badge */}
-          <div className="text-sm text-accent font-semibold mb-4">
+          <div className="text-sm font-semibold mb-4 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">
             {blog.category}
           </div>
 
           {/* Title */}
-          <h1 className="text-4xl md:text-5xl font-serif font-bold text-primary mb-6">
-            {blog.title}
+          <h1 className="text-4xl md:text-5xl font-serif font-bold mb-6">
+            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">{blog.title}</span>
           </h1>
 
           {/* Meta Info */}
@@ -299,10 +299,9 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
             <h3 className="text-sm font-semibold text-gray-900 mb-4">TAGS</h3>
             <div className="flex flex-wrap gap-2">
               {blog.tags.map((tag: string) => (
-                <Link
-                  key={tag}
+            <Link
                   href={`/blogs?search=${tag}`}
-                  className="px-4 py-2 bg-gray-100 hover:bg-primary hover:text-white text-gray-700 rounded-lg transition-colors duration-200"
+                  className="px-4 py-2 bg-gradient-to-r from-purple-50 to-pink-50 hover:from-purple-600 hover:via-purple-600 hover:to-pink-500 text-purple-700 hover:text-white rounded-lg transition-all duration-300 font-medium"
                 >
                   #{tag}
                 </Link>
@@ -378,8 +377,8 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
       {relatedBlogs.length > 0 && (
         <section className="section-padding bg-gray-50">
           <div className="container-custom">
-            <h2 className="text-3xl font-serif font-bold text-primary mb-8 text-center">
-              Suggested Reading
+            <h2 className="text-3xl font-serif font-bold mb-8 text-center">
+              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">Suggested Reading</span>
             </h2>
             <div className="grid md:grid-cols-3 gap-8">
               {relatedBlogs.map((relatedBlog) => (
@@ -391,10 +390,14 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
       )}
 
       {/* CTA Section */}
-      <section className="section-padding bg-primary text-white">
-        <div className="container-custom text-center max-w-3xl mx-auto">
+      <section className="section-padding bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white relative overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden opacity-30">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-500 rounded-full filter blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-pink-500 rounded-full filter blur-3xl"></div>
+        </div>
+        <div className="container-custom text-center max-w-3xl mx-auto relative z-10">
           <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">
-            Want More Insights?
+            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Want More Insights?</span>
           </h2>
           <p className="text-xl text-gray-200 mb-8">
             Subscribe to receive weekly analysis and stay ahead of policy trends.

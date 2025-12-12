@@ -76,10 +76,15 @@ export default function ContactPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary to-secondary text-white py-16">
-        <div className="container-custom text-center">
+      <section className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white py-16 relative overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0 overflow-hidden opacity-30">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-500 rounded-full filter blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-pink-500 rounded-full filter blur-3xl"></div>
+        </div>
+        <div className="container-custom text-center relative z-10">
           <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">
-            Get in Touch
+            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Get in Touch</span>
           </h1>
           <p className="text-xl text-gray-200 max-w-2xl mx-auto">
             Questions about AI? Need custom prompts or consultation? Let's talk!
@@ -138,8 +143,8 @@ export default function ContactPage() {
       <section className="section-padding">
         <div className="container-custom max-w-3xl">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
-              Send a Message
+            <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">
+              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">Send a Message</span>
             </h2>
             <p className="text-lg text-gray-600">
               Fill out the form below and we'll respond within 24-48 hours
@@ -299,8 +304,8 @@ export default function ContactPage() {
       <section className="section-padding bg-gray-50">
         <div className="container-custom max-w-5xl">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
-              How We Can Help
+            <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">
+              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">How We Can Help</span>
             </h2>
           </div>
 
@@ -397,10 +402,14 @@ export default function ContactPage() {
       </section>
 
       {/* Newsletter CTA */}
-      <section className="section-padding bg-primary text-white">
-        <div className="container-custom text-center max-w-3xl mx-auto">
+      <section className="section-padding bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white relative overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden opacity-30">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-500 rounded-full filter blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-pink-500 rounded-full filter blur-3xl"></div>
+        </div>
+        <div className="container-custom text-center max-w-3xl mx-auto relative z-10">
           <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">
-            Stay Updated with AI
+            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Stay Updated with AI</span>
           </h2>
           <p className="text-xl text-gray-200 mb-8">
             Subscribe to receive weekly AI tips, prompts, and money-making strategies.

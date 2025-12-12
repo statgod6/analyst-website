@@ -28,7 +28,7 @@ const Footer = () => {
   ]
 
   return (
-    <footer className="bg-primary text-white">
+    <footer className="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white">
       <div className="container-custom section-padding">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
           {/* About Section */}
@@ -52,7 +52,7 @@ const Footer = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-300 hover:text-accent transition-colors duration-200"
+                  className="text-gray-300 hover:text-transparent hover:bg-gradient-to-r hover:from-purple-400 hover:to-pink-400 hover:bg-clip-text transition-all duration-300"
                   aria-label={social.name}
                 >
                   <social.icon className="h-5 w-5" />
@@ -63,13 +63,13 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+            <h4 className="text-lg font-semibold mb-4 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Quick Links</h4>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-gray-300 hover:text-accent transition-colors duration-200"
+                    className="text-gray-300 hover:text-transparent hover:bg-gradient-to-r hover:from-purple-400 hover:to-pink-400 hover:bg-clip-text transition-all duration-300"
                   >
                     {link.name}
                   </Link>
@@ -80,13 +80,13 @@ const Footer = () => {
 
           {/* Categories */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Topics</h4>
+            <h4 className="text-lg font-semibold mb-4 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Topics</h4>
             <ul className="space-y-2">
               {categories.map((category) => (
                 <li key={category.name}>
                   <Link
                     href={category.href}
-                    className="text-gray-300 hover:text-accent transition-colors duration-200"
+                    className="text-gray-300 hover:text-transparent hover:bg-gradient-to-r hover:from-purple-400 hover:to-pink-400 hover:bg-clip-text transition-all duration-300"
                   >
                     {category.name}
                   </Link>
@@ -97,7 +97,7 @@ const Footer = () => {
 
           {/* Newsletter */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Stay Updated</h4>
+            <h4 className="text-lg font-semibold mb-4 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Stay Updated</h4>
             <p className="text-gray-300 mb-4 text-sm">
               Subscribe to receive the latest analysis and insights.
             </p>
@@ -106,16 +106,16 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-primary-light">
+        <div className="mt-12 pt-8 border-t border-purple-800/50">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-gray-300 text-sm">
               © {currentYear} AI for Everyone. All rights reserved.
             </p>
             <div className="flex space-x-6 text-sm">
-              <Link href="/privacy" className="text-gray-300 hover:text-accent transition-colors duration-200">
+              <Link href="/privacy" className="text-gray-300 hover:text-transparent hover:bg-gradient-to-r hover:from-purple-400 hover:to-pink-400 hover:bg-clip-text transition-all duration-300">
                 Privacy Policy
               </Link>
-              <Link href="/terms" className="text-gray-300 hover:text-accent transition-colors duration-200">
+              <Link href="/terms" className="text-gray-300 hover:text-transparent hover:bg-gradient-to-r hover:from-purple-400 hover:to-pink-400 hover:bg-clip-text transition-all duration-300">
                 Terms of Service
               </Link>
             </div>

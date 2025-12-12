@@ -31,18 +31,18 @@ export default function ProductCard({ product }: ProductCardProps) {
   }
 
   return (
-    <div className="card overflow-hidden group h-full flex flex-col hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-accent/20">
+    <div className="card overflow-hidden group h-full flex flex-col hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-purple-200">
       {/* Content */}
       <div className="p-6 flex flex-col flex-1">
         {/* Type Badge */}
         <div className="inline-block">
-          <span className="text-xs text-accent font-bold uppercase tracking-wide bg-accent/10 px-3 py-1.5 rounded-full">
+          <span className="text-xs font-bold uppercase tracking-wide bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent bg-purple-50 px-3 py-1.5 rounded-full">
             {typeLabels[product.type]}
           </span>
         </div>
 
         {/* Title */}
-        <h3 className="text-xl font-serif font-bold mb-3 mt-3 group-hover:text-accent transition-colors leading-tight">
+        <h3 className="text-xl font-serif font-bold mb-3 mt-3 group-hover:bg-gradient-to-r group-hover:from-purple-600 group-hover:to-pink-500 group-hover:bg-clip-text group-hover:text-transparent transition-all leading-tight">
           <Link href={`/products/${product.slug}`}>
             {product.name}
           </Link>
@@ -95,16 +95,16 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         {/* Price & CTA */}
         <div className="mt-auto">
-          <div className="flex items-center justify-between mb-4 bg-gradient-to-r from-primary/5 to-accent/5 p-4 rounded-lg">
+          <div className="flex items-center justify-between mb-4 bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-lg">
             <div>
               <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">Price</p>
-              <span className="text-3xl font-bold text-primary">
+              <span className="text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">
                 {product.currency === 'INR' ? '₹' : '$'}{product.price}
               </span>
               <span className="text-sm text-gray-500 ml-2">{product.currency}</span>
             </div>
             <div className="text-right">
-              <p className="text-xs text-accent font-semibold uppercase">Instant</p>
+              <p className="text-xs bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent font-semibold uppercase">Instant</p>
               <p className="text-xs text-gray-500">Download</p>
             </div>
           </div>

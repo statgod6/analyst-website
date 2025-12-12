@@ -59,8 +59,8 @@ export default function AdminSidebar({ mobileOpen = false, onClose }: AdminSideb
                   onClick={onClose}
                   className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 ${
                     isActive
-                      ? 'bg-gradient-to-r from-primary to-accent text-white shadow-md'
-                      : 'text-gray-700 hover:bg-gray-50 hover:text-primary'
+                      ? 'bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 text-white shadow-md'
+                      : 'text-gray-700 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 hover:text-purple-600'
                   }`}
                 >
                   <Icon className="h-5 w-5" />
@@ -71,8 +71,8 @@ export default function AdminSidebar({ mobileOpen = false, onClose }: AdminSideb
           </div>
           
           {/* Footer */}
-          <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-gray-50">
-            <p className="text-xs text-gray-500 text-center">
+          <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-gradient-to-r from-purple-50 to-pink-50">
+            <p className="text-xs text-center font-medium bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">
               Admin Panel v1.0
             </p>
           </div>

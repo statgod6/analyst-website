@@ -34,7 +34,7 @@ const Header = () => {
 
           {/* Brand Name - Center */}
           <div className="absolute left-1/2 transform -translate-x-1/2">
-            <span className="text-lg md:text-2xl font-bold text-primary whitespace-nowrap">
+            <span className="text-xl md:text-3xl font-extrabold whitespace-nowrap bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent drop-shadow-sm tracking-tight hover:from-purple-600 hover:via-pink-500 hover:to-orange-400 transition-all duration-500 cursor-default">
               AI for Everyone
             </span>
           </div>
@@ -45,7 +45,7 @@ const Header = () => {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-secondary hover:text-primary font-medium transition-colors duration-200"
+                className="font-semibold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent hover:from-purple-600 hover:via-pink-500 hover:to-orange-400 transition-all duration-500"
               >
                 {item.name}
               </Link>
@@ -74,7 +74,7 @@ const Header = () => {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-secondary hover:text-primary font-medium transition-colors duration-200"
+                  className="font-semibold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent hover:from-purple-600 hover:via-pink-500 hover:to-orange-400 transition-all duration-500"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}
