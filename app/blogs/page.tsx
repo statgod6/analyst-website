@@ -9,7 +9,7 @@ import Blog from '@/models/Blog'
 import User from '@/models/User'
 
 export const metadata: Metadata = {
-  title: 'AI Guides & Tips Blog | Learn AI for Everyone',
+  title: 'AI Guides & Tips Blog | Learn AIE for Everyone',
   description: 'Practical AI guides, tutorials, and tips. Learn how to use ChatGPT, AI prompts, automation strategies, and money-making techniques with AI.',
   keywords: ['AI guides', 'AI tutorials', 'ChatGPT tips', 'AI prompts', 'AI money making', 'AI automation'],
 }
@@ -158,11 +158,11 @@ export default async function BlogsPage({
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-500 rounded-full filter blur-3xl"></div>
           <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-pink-500 rounded-full filter blur-3xl"></div>
         </div>
-        <div className="container-custom relative z-10">
-          <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">
+        <div className="container-custom relative z-10 text-center">
+          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif font-bold mb-4">
             <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">AI Guides & Learning Resources</span>
           </h1>
-          <p className="text-xl text-gray-200 max-w-3xl">
+          <p className="text-xl text-gray-200 max-w-3xl mx-auto">
             Practical tutorials, tips, and strategies to master AI tools and boost your productivity and income.
           </p>
         </div>

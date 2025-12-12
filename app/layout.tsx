@@ -22,25 +22,25 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   metadataBase: new URL('https://yourdomain.com'),
   title: {
-    default: 'AI for Everyone | AI Prompts, Guides & Money-Making Strategies',
-    template: '%s | AI for Everyone'
+    default: 'AIE for Everyone | AI Prompts, Guides & Money-Making Strategies',
+    template: '%s | AIE for Everyone'
   },
   description: 'Master AI with practical prompts, agent guides, and proven strategies. Learn how to use AI tools to boost productivity and make money online. AI made simple for everyone.',
   keywords: ['AI prompts', 'AI guides', 'AI money making', 'AI agents', 'artificial intelligence', 'AI tools', 'ChatGPT prompts', 'AI automation'],
-  authors: [{ name: 'AI for Everyone' }],
-  creator: 'AI for Everyone',
-  publisher: 'AI for Everyone',
+  authors: [{ name: 'AIE for Everyone' }],
+  creator: 'AIE for Everyone',
+  publisher: 'AIE for Everyone',
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: 'https://yourdomain.com',
-    title: 'AI for Everyone | Master AI & Boost Your Income',
+    title: 'AIE for Everyone | Master AI & Boost Your Income',
     description: 'Learn AI with practical prompts, guides, and money-making strategies. AI tools made accessible for everyone.',
-    siteName: 'AI for Everyone',
+    siteName: 'AIE for Everyone',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AI for Everyone | AI Prompts & Guides',
+    title: 'AIE for Everyone | AI Prompts & Guides',
     description: 'Master AI with practical prompts, agent guides, and proven strategies to boost productivity and income.',
     creator: '@yourhandle',
   },

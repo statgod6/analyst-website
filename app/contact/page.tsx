@@ -83,7 +83,7 @@ export default function ContactPage() {
           <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-pink-500 rounded-full filter blur-3xl"></div>
         </div>
         <div className="container-custom text-center relative z-10">
-          <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-serif font-bold mb-4">
             <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Get in Touch</span>
           </h1>
           <p className="text-xl text-gray-200 max-w-2xl mx-auto">

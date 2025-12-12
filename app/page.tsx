@@ -119,49 +119,49 @@ export default async function HomePage() {
           <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style={{animationDelay: '2s'}}></div>
         </div>
         
-        <div className="container-custom py-20 md:py-32 relative z-10">
+        <div className="container-custom py-12 md:py-20 lg:py-32 relative z-10 px-4">
           <div className="max-w-5xl mx-auto text-center">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-8 animate-fade-in">
-              <Sparkles className="h-4 w-4 text-yellow-400" />
-              <span className="text-sm font-medium">AI Made Simple & Profitable</span>
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 py-1.5 md:px-4 md:py-2 mb-6 md:mb-8 animate-fade-in">
+              <Sparkles className="h-3 w-3 md:h-4 md:w-4 text-yellow-400" />
+              <span className="text-xs md:text-sm font-medium">AI Made Simple & Profitable</span>
             </div>
             
             {/* Main Heading */}
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-              Unlock Your <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">AI Potential</span>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 md:mb-6 leading-tight px-2">
+              <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">AI Engineering For Everyone</span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
-              Master AI tools, prompts, and automation strategies. Turn AI into your competitive advantage and start earning today.
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 mb-8 md:mb-12 max-w-3xl mx-auto leading-relaxed px-4">
+              Practical AI consulting to save time, cut costs, and unlock new income streams.
             </p>
             
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Link href="/products" className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-purple-600 to-pink-600 rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/50">
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center mb-8 md:mb-12 px-4">
+              <Link href="/products" className="group relative inline-flex items-center justify-center px-6 py-3 md:px-8 md:py-4 text-base md:text-lg font-semibold text-white bg-gradient-to-r from-purple-600 to-pink-600 rounded-full overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/50">
                 <span className="relative z-10 flex items-center gap-2">
                   Get Started Free
-                  <Rocket className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  <Rocket className="h-4 w-4 md:h-5 md:w-5 group-hover:translate-x-1 transition-transform" />
                 </span>
               </Link>
-              <Link href="/blogs" className="group inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white border-2 border-white/30 rounded-full backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
+              <Link href="/blogs" className="group inline-flex items-center justify-center px-6 py-3 md:px-8 md:py-4 text-base md:text-lg font-semibold text-white border-2 border-white/30 rounded-full backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
                 Explore Guides
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="ml-2 h-4 w-4 md:h-5 md:w-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
             
             {/* Trust Indicators */}
-            <div className="flex flex-wrap justify-center gap-8 text-sm text-gray-400">
+            <div className="flex flex-wrap justify-center gap-4 md:gap-8 text-xs md:text-sm text-gray-400 px-4">
               <div className="flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-green-400" />
+                <CheckCircle className="h-4 w-4 md:h-5 md:w-5 text-green-400 flex-shrink-0" />
                 <span>1000+ AI Resources</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-green-400" />
+                <CheckCircle className="h-4 w-4 md:h-5 md:w-5 text-green-400 flex-shrink-0" />
                 <span>Instant Access</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-green-400" />
+                <CheckCircle className="h-4 w-4 md:h-5 md:w-5 text-green-400 flex-shrink-0" />
                 <span>Money-Back Guarantee</span>
               </div>
             </div>
@@ -171,8 +171,8 @@ export default async function HomePage() {
 
       {/* Stats Section */}
       <section className="section-padding bg-gradient-to-b from-white to-gray-50">
-        <div className="container-custom">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
+        <div className="container-custom px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-12 md:mb-16">
             {[
               { number: '10K+', label: 'Happy Users', icon: Users },
               { number: '500+', label: 'AI Resources', icon: Cpu },
@@ -182,28 +182,28 @@ export default async function HomePage() {
               const Icon = stat.icon
               return (
                 <div key={i} className="text-center group">
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <Icon className="h-8 w-8 text-white" />
+                  <div className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <Icon className="h-6 w-6 md:h-8 md:w-8 text-white" />
                   </div>
-                  <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">{stat.number}</div>
-                  <div className="text-gray-600 font-medium">{stat.label}</div>
+                  <div className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-1 md:mb-2">{stat.number}</div>
+                  <div className="text-xs md:text-sm text-gray-600 font-medium">{stat.label}</div>
                 </div>
               )
             })}
           </div>
 
           {/* Features Grid */}
-          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
             <div className="group relative">
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
-              <div className="relative bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-purple-300 transition-all duration-300 hover:shadow-xl">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
-                    <Brain className="h-7 w-7 text-white" />
+              <div className="relative bg-white border-2 border-gray-200 rounded-2xl p-6 md:p-8 hover:border-purple-300 transition-all duration-300 hover:shadow-xl">
+                <div className="flex items-center gap-3 md:gap-4 mb-3 md:mb-4">
+                  <div className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Brain className="h-6 w-6 md:h-7 md:w-7 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold">AI Mastery</h3>
+                  <h3 className="text-xl md:text-2xl font-bold">AI Mastery</h3>
                 </div>
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
                   Learn to use ChatGPT, Claude, Midjourney, and cutting-edge AI tools like a pro. Master prompt engineering and automation.
                 </p>
               </div>
@@ -211,14 +211,14 @@ export default async function HomePage() {
 
             <div className="group relative">
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-2xl opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
-              <div className="relative bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-cyan-300 transition-all duration-300 hover:shadow-xl">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-xl flex items-center justify-center">
-                    <TrendingUp className="h-7 w-7 text-white" />
+              <div className="relative bg-white border-2 border-gray-200 rounded-2xl p-6 md:p-8 hover:border-cyan-300 transition-all duration-300 hover:shadow-xl">
+                <div className="flex items-center gap-3 md:gap-4 mb-3 md:mb-4">
+                  <div className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <TrendingUp className="h-6 w-6 md:h-7 md:w-7 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold">Make Money</h3>
+                  <h3 className="text-xl md:text-2xl font-bold">Make Money</h3>
                 </div>
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
                   Discover proven strategies to monetize AI. Freelancing, content creation, automation services, and passive income methods.
                 </p>
               </div>
@@ -226,14 +226,14 @@ export default async function HomePage() {
 
             <div className="group relative">
               <div className="absolute inset-0 bg-gradient-to-r from-green-600 to-emerald-600 rounded-2xl opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
-              <div className="relative bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-green-300 transition-all duration-300 hover:shadow-xl">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
-                    <Zap className="h-7 w-7 text-white" />
+              <div className="relative bg-white border-2 border-gray-200 rounded-2xl p-6 md:p-8 hover:border-green-300 transition-all duration-300 hover:shadow-xl">
+                <div className="flex items-center gap-3 md:gap-4 mb-3 md:mb-4">
+                  <div className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Zap className="h-6 w-6 md:h-7 md:w-7 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold">Premium Prompts</h3>
+                  <h3 className="text-xl md:text-2xl font-bold">Premium Prompts</h3>
                 </div>
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
                   Access 1000+ battle-tested AI prompts for content, marketing, coding, and business automation. Save hours every day.
                 </p>
               </div>
@@ -241,14 +241,14 @@ export default async function HomePage() {
 
             <div className="group relative">
               <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-600 rounded-2xl opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
-              <div className="relative bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-orange-300 transition-all duration-300 hover:shadow-xl">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center">
-                    <Cpu className="h-7 w-7 text-white" />
+              <div className="relative bg-white border-2 border-gray-200 rounded-2xl p-6 md:p-8 hover:border-orange-300 transition-all duration-300 hover:shadow-xl">
+                <div className="flex items-center gap-3 md:gap-4 mb-3 md:mb-4">
+                  <div className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Cpu className="h-6 w-6 md:h-7 md:w-7 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold">AI Agents</h3>
+                  <h3 className="text-xl md:text-2xl font-bold">AI Agents</h3>
                 </div>
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
                   Build intelligent AI agents that work 24/7. Automate customer service, content creation, and business processes.
                 </p>
               </div>
@@ -259,12 +259,12 @@ export default async function HomePage() {
 
       {/* Featured Blogs Section */}
       <section className="section-padding">
-        <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">
+        <div className="container-custom px-4">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif font-bold mb-3 md:mb-4">
               <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">Latest AI Insights</span>
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto px-4">
               Stay ahead with the latest AI trends, tips, and practical guides to master artificial intelligence.
             </p>
           </div>
@@ -323,30 +323,30 @@ export default async function HomePage() {
 
       {/* Who We Serve Section */}
       <section className="section-padding bg-white">
-        <div className="container-custom">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-100 to-pink-100 border border-purple-200 rounded-full px-4 py-2 mb-4">
-              <Users className="h-4 w-4 text-purple-600" />
-              <span className="text-sm font-semibold text-purple-600">Trusted Worldwide</span>
+        <div className="container-custom px-4">
+          <div className="text-center mb-12 md:mb-16">
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-100 to-pink-100 border border-purple-200 rounded-full px-3 py-1.5 md:px-4 md:py-2 mb-3 md:mb-4">
+              <Users className="h-3 w-3 md:h-4 md:w-4 text-purple-600" />
+              <span className="text-xs md:text-sm font-semibold text-purple-600">Trusted Worldwide</span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-serif font-bold text-primary mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-primary mb-3 md:mb-4 px-2">
               Who We <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Empower</span>
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            <p className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto px-4">
               From students to CEOs, we help everyone unlock AI's potential and stay ahead in the digital age.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto">
             {/* Researchers */}
             <div className="group relative">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl opacity-0 group-hover:opacity-10 blur-xl transition-all duration-300"></div>
-              <div className="relative bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-blue-300 hover:shadow-2xl transition-all duration-300">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <BookOpen className="h-8 w-8 text-white" />
+              <div className="relative bg-white border-2 border-gray-200 rounded-2xl p-6 md:p-8 hover:border-blue-300 hover:shadow-2xl transition-all duration-300">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <BookOpen className="h-6 w-6 md:h-8 md:w-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-gray-900">Researchers</h3>
-                <p className="text-gray-600 leading-relaxed">
+                <h3 className="text-lg md:text-xl font-bold mb-2 md:mb-3 text-gray-900">Researchers</h3>
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
                   Accelerate research with AI-powered data analysis, literature reviews, and automated documentation.
                 </p>
               </div>
@@ -355,12 +355,12 @@ export default async function HomePage() {
             {/* Teachers */}
             <div className="group relative">
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl opacity-0 group-hover:opacity-10 blur-xl transition-all duration-300"></div>
-              <div className="relative bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-purple-300 hover:shadow-2xl transition-all duration-300">
-                <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <Award className="h-8 w-8 text-white" />
+              <div className="relative bg-white border-2 border-gray-200 rounded-2xl p-6 md:p-8 hover:border-purple-300 hover:shadow-2xl transition-all duration-300">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Award className="h-6 w-6 md:h-8 md:w-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-gray-900">Teachers & Educators</h3>
-                <p className="text-gray-600 leading-relaxed">
+                <h3 className="text-lg md:text-xl font-bold mb-2 md:mb-3 text-gray-900">Teachers & Educators</h3>
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
                   Create engaging lessons, personalized learning materials, and automate grading with AI assistance.
                 </p>
               </div>
@@ -369,12 +369,12 @@ export default async function HomePage() {
             {/* Students */}
             <div className="group relative">
               <div className="absolute inset-0 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl opacity-0 group-hover:opacity-10 blur-xl transition-all duration-300"></div>
-              <div className="relative bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-green-300 hover:shadow-2xl transition-all duration-300">
-                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <Brain className="h-8 w-8 text-white" />
+              <div className="relative bg-white border-2 border-gray-200 rounded-2xl p-6 md:p-8 hover:border-green-300 hover:shadow-2xl transition-all duration-300">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Brain className="h-6 w-6 md:h-8 md:w-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-gray-900">Students</h3>
-                <p className="text-gray-600 leading-relaxed">
+                <h3 className="text-lg md:text-xl font-bold mb-2 md:mb-3 text-gray-900">Students</h3>
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
                   Master AI tools for studying, research, projects, and career preparation. Learn smarter, not harder.
                 </p>
               </div>
@@ -383,12 +383,12 @@ export default async function HomePage() {
             {/* Industry Professionals */}
             <div className="group relative">
               <div className="absolute inset-0 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl opacity-0 group-hover:opacity-10 blur-xl transition-all duration-300"></div>
-              <div className="relative bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-orange-300 hover:shadow-2xl transition-all duration-300">
-                <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <TrendingUp className="h-8 w-8 text-white" />
+              <div className="relative bg-white border-2 border-gray-200 rounded-2xl p-6 md:p-8 hover:border-orange-300 hover:shadow-2xl transition-all duration-300">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <TrendingUp className="h-6 w-6 md:h-8 md:w-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-gray-900">Industry Professionals</h3>
-                <p className="text-gray-600 leading-relaxed">
+                <h3 className="text-lg md:text-xl font-bold mb-2 md:mb-3 text-gray-900">Industry Professionals</h3>
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
                   Stay competitive with AI automation, data insights, and workflow optimization for your industry.
                 </p>
               </div>
@@ -397,12 +397,12 @@ export default async function HomePage() {
             {/* Small & Medium Businesses */}
             <div className="group relative">
               <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-2xl opacity-0 group-hover:opacity-10 blur-xl transition-all duration-300"></div>
-              <div className="relative bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-indigo-300 hover:shadow-2xl transition-all duration-300">
-                <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <Globe className="h-8 w-8 text-white" />
+              <div className="relative bg-white border-2 border-gray-200 rounded-2xl p-6 md:p-8 hover:border-indigo-300 hover:shadow-2xl transition-all duration-300">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Globe className="h-6 w-6 md:h-8 md:w-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-gray-900">Small & Medium Businesses</h3>
-                <p className="text-gray-600 leading-relaxed">
+                <h3 className="text-lg md:text-xl font-bold mb-2 md:mb-3 text-gray-900">Small & Medium Businesses</h3>
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
                   Scale operations, reduce costs, and compete with enterprise-level AI solutions tailored for SMBs.
                 </p>
               </div>
@@ -411,12 +411,12 @@ export default async function HomePage() {
             {/* Content Creators */}
             <div className="group relative">
               <div className="absolute inset-0 bg-gradient-to-br from-pink-500 to-rose-500 rounded-2xl opacity-0 group-hover:opacity-10 blur-xl transition-all duration-300"></div>
-              <div className="relative bg-white border-2 border-gray-200 rounded-2xl p-8 hover:border-pink-300 hover:shadow-2xl transition-all duration-300">
-                <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-rose-500 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <Sparkles className="h-8 w-8 text-white" />
+              <div className="relative bg-white border-2 border-gray-200 rounded-2xl p-6 md:p-8 hover:border-pink-300 hover:shadow-2xl transition-all duration-300">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-pink-500 to-rose-500 rounded-xl flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Sparkles className="h-6 w-6 md:h-8 md:w-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-gray-900">Content Creators</h3>
-                <p className="text-gray-600 leading-relaxed">
+                <h3 className="text-lg md:text-xl font-bold mb-2 md:mb-3 text-gray-900">Content Creators</h3>
+                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
                   Create viral content 10x faster. AI-powered writing, video scripts, social media, and more.
                 </p>
               </div>
@@ -427,12 +427,12 @@ export default async function HomePage() {
 
       {/* Featured Products Section */}
       <section className="section-padding bg-gray-50">
-        <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">
+        <div className="container-custom px-4">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif font-bold mb-3 md:mb-4">
               <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">Premium AI Resources</span>
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto px-4">
               Get access to premium AI prompts, agent guides, and money-making blueprints.
             </p>
           </div>
@@ -521,38 +521,38 @@ export default async function HomePage() {
           <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-pink-500 rounded-full filter blur-3xl"></div>
         </div>
         
-        <div className="container-custom relative z-10">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-4">
-              <Star className="h-4 w-4 text-yellow-400 fill-yellow-400" />
-              <span className="text-sm font-medium">Trusted by Thousands</span>
+        <div className="container-custom relative z-10 px-4">
+          <div className="text-center mb-12 md:mb-16">
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 py-1.5 md:px-4 md:py-2 mb-3 md:mb-4">
+              <Star className="h-3 w-3 md:h-4 md:w-4 text-yellow-400 fill-yellow-400" />
+              <span className="text-xs md:text-sm font-medium">Trusted by Thousands</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4">
               Success Stories
             </h2>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto px-4">
               See how people are transforming their lives with AI
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-6 md:gap-8">
             {testimonials.map((testimonial) => (
               <div key={testimonial.id} className="group relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-300"></div>
-                <div className="relative bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 hover:bg-white/15 transition-all duration-300">
-                  <div className="flex gap-1 mb-4">
+                <div className="relative bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-6 md:p-8 hover:bg-white/15 transition-all duration-300">
+                  <div className="flex gap-1 mb-3 md:mb-4">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-5 w-5 text-yellow-400 fill-yellow-400" />
+                      <Star key={i} className="h-4 w-4 md:h-5 md:w-5 text-yellow-400 fill-yellow-400" />
                     ))}
                   </div>
-                  <p className="text-gray-200 mb-6 italic leading-relaxed">"{testimonial.content}"</p>
+                  <p className="text-sm md:text-base text-gray-200 mb-4 md:mb-6 italic leading-relaxed">"{testimonial.content}"</p>
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white font-bold">
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
                       {testimonial.author.charAt(0)}
                     </div>
                     <div>
-                      <p className="font-semibold text-white">{testimonial.author}</p>
-                      <p className="text-sm text-gray-400">{testimonial.role}</p>
+                      <p className="text-sm md:text-base font-semibold text-white">{testimonial.author}</p>
+                      <p className="text-xs md:text-sm text-gray-400">{testimonial.role}</p>
                     </div>
                   </div>
                 </div>
@@ -568,51 +568,51 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-br from-purple-600 via-pink-600 to-purple-600"></div>
         <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10"></div>
         
-        <div className="container-custom relative z-10">
+        <div className="container-custom relative z-10 px-4">
           <div className="max-w-3xl mx-auto text-center text-white">
-            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-4 py-2 mb-6">
-              <Sparkles className="h-4 w-4" />
-              <span className="text-sm font-medium">Join 10,000+ AI Enthusiasts</span>
+            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full px-3 py-1.5 md:px-4 md:py-2 mb-4 md:mb-6">
+              <Sparkles className="h-3 w-3 md:h-4 md:w-4" />
+              <span className="text-xs md:text-sm font-medium">Join 10,000+ AI Enthusiasts</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4">
               Get Weekly AI Insights
             </h2>
-            <p className="text-xl text-gray-100 mb-8">
+            <p className="text-lg md:text-xl text-gray-100 mb-6 md:mb-8 px-4">
               Free prompts, tutorials, and money-making strategies delivered to your inbox every week.
             </p>
             <div className="max-w-md mx-auto">
               <NewsletterForm variant="light" />
             </div>
-            <p className="text-sm text-gray-200 mt-4">No spam. Unsubscribe anytime. 100% free.</p>
+            <p className="text-xs md:text-sm text-gray-200 mt-4">No spam. Unsubscribe anytime. 100% free.</p>
           </div>
         </div>
       </section>
 
       {/* Contact CTA Section */}
       <section className="section-padding bg-white">
-        <div className="container-custom">
+        <div className="container-custom px-4">
           <div className="max-w-4xl mx-auto">
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-3xl opacity-75 blur-xl group-hover:opacity-100 transition-opacity"></div>
-              <div className="relative bg-gradient-to-br from-slate-900 to-purple-900 rounded-3xl p-12 md:p-16 text-center text-white overflow-hidden">
+              <div className="relative bg-gradient-to-br from-slate-900 to-purple-900 rounded-3xl p-8 md:p-12 lg:p-16 text-center text-white overflow-hidden">
                 {/* Decorative elements */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500 rounded-full filter blur-3xl opacity-20"></div>
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-pink-500 rounded-full filter blur-3xl opacity-20"></div>
                 
                 <div className="relative z-10">
-                  <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-6">
-                    <Rocket className="h-4 w-4" />
-                    <span className="text-sm font-medium">Let's Work Together</span>
+                  <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-3 py-1.5 md:px-4 md:py-2 mb-4 md:mb-6">
+                    <Rocket className="h-3 w-3 md:h-4 md:w-4" />
+                    <span className="text-xs md:text-sm font-medium">Let's Work Together</span>
                   </div>
-                  <h2 className="text-3xl md:text-5xl font-bold mb-4">
+                  <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4">
                     Ready to Master AI?
                   </h2>
-                  <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                  <p className="text-base md:text-lg lg:text-xl text-gray-300 mb-6 md:mb-8 max-w-2xl mx-auto px-4">
                     Have questions? Need custom AI solutions? Let's connect and transform your workflow together.
                   </p>
-                  <Link href="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-white text-purple-900 rounded-full font-bold text-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105">
+                  <Link href="/contact" className="inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 bg-white text-purple-900 rounded-full font-bold text-base md:text-lg hover:bg-gray-100 transition-all duration-300 hover:scale-105">
                     Get in Touch
-                    <ArrowRight className="h-5 w-5" />
+                    <ArrowRight className="h-4 w-4 md:h-5 md:w-5" />
                   </Link>
                 </div>
               </div>

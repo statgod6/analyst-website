@@ -36,7 +36,7 @@ const Footer = () => {
             <div className="mb-4">
               <Image 
                 src="/logo.png" 
-                alt="AI for Everyone Logo" 
+                alt="AIE Logo"
                 width={150} 
                 height={50} 
                 className="h-12 w-auto brightness-0 invert"
@@ -109,7 +109,7 @@ const Footer = () => {
         <div className="mt-12 pt-8 border-t border-purple-800/50">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-gray-300 text-sm">
-              © {currentYear} AI for Everyone. All rights reserved.
+              © {currentYear} AIE. All rights reserved.
             </p>
             <div className="flex space-x-6 text-sm">
               <Link href="/privacy" className="text-gray-300 hover:text-transparent hover:bg-gradient-to-r hover:from-purple-400 hover:to-pink-400 hover:bg-clip-text transition-all duration-300">

@@ -25,7 +25,7 @@ const Header = () => {
             <Link href="/" className="flex items-center">
               <Image 
                 src="/logo.png" 
-                alt="AI for Everyone Logo" 
+                alt="AIE Logo"
                 width={150} 
                 height={50} 
                 className="h-10 md:h-12 w-auto"
@@ -33,15 +33,15 @@ const Header = () => {
               />
             </Link>
             {/* Brand Name - Next to logo on desktop, centered on mobile */}
-            <span className="hidden md:inline text-lg md:text-2xl font-extrabold whitespace-nowrap bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent drop-shadow-sm tracking-tight hover:from-purple-600 hover:via-pink-500 hover:to-orange-400 transition-all duration-500 cursor-default">
-              AI for Everyone
+            <span className="hidden md:inline text-2xl md:text-3xl font-extrabold whitespace-nowrap text-gray-900 drop-shadow-sm tracking-widest hover:text-gray-700 transition-all duration-500 cursor-default font-serif">
+              AIE
             </span>
           </div>
 
           {/* Brand Name - Center on mobile only */}
           <div className="absolute left-1/2 transform -translate-x-1/2 md:hidden">
-            <span className="text-base font-extrabold whitespace-nowrap bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 bg-clip-text text-transparent drop-shadow-sm tracking-tight">
-              AI for Everyone
+            <span className="text-xl font-extrabold whitespace-nowrap text-gray-900 drop-shadow-sm tracking-widest font-serif">
+              AIE
             </span>
           </div>
 
