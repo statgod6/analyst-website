@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import dbConnect from '@/lib/mongodb'
-import Contact from '@/models/Contact'
+import { prisma, normalizeEmail } from '@/lib/db'
 import { sendContactFormNotification } from '@/lib/email'
 
 export async function POST(request: NextRequest) {
@@ -8,40 +7,29 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { name, email, organization, inquiryType, budget, message } = body
 
-    // Validate required fields
     if (!name || !email || !inquiryType || !message) {
-      return NextResponse.json(
-        { message: 'Please fill in all required fields' },
-        { status: 400 }
-      )
+      return NextResponse.json({ message: 'Please fill in all required fields' }, { status: 400 })
     }
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(email)) {
-      return NextResponse.json(
-        { message: 'Please provide a valid email address' },
-        { status: 400 }
-      )
+      return NextResponse.json({ message: 'Please provide a valid email address' }, { status: 400 })
     }
 
-    // Connect to database
-    await dbConnect()
-
-    // Save contact form submission to database
-    const contact = await Contact.create({
-      name,
-      email,
-      organization: organization || undefined,
-      inquiryType,
-      budget: budget || undefined,
-      message,
-      status: 'new',
+    const contact = await prisma.contact.create({
+      data: {
+        name,
+        email: normalizeEmail(email),
+        organization: organization || null,
+        inquiryType,
+        budget: budget || null,
+        message,
+        status: 'new',
+      },
     })
 
-    console.log('✅ Contact form saved to database:', contact._id)
+    console.log('✅ Contact form saved to database:', contact.id)
 
-    // Send email notification to admin
     const emailResult = await sendContactFormNotification({
       name,
       email,
@@ -56,10 +44,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(
-      { 
-        message: 'Thank you for your message! I will get back to you within 24-48 hours.',
-        success: true 
-      },
+      { message: 'Thank you for your message! I will get back to you within 24-48 hours.', success: true },
       { status: 200 }
     )
   } catch (error) {

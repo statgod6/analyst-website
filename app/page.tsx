@@ -3,10 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, BookOpen, TrendingUp, Globe, Award, Star, Sparkles, Zap, Brain, Cpu, Users, CheckCircle, Rocket } from 'lucide-react'
 import NewsletterForm from '@/components/forms/NewsletterForm'
-import dbConnect from '@/lib/mongodb'
-import Blog from '@/models/Blog'
-import Product from '@/models/Product'
-import User from '@/models/User'
+import { prisma, serializeBlog, serializeProduct } from '@/lib/db'
 
 export const metadata: Metadata = {
   title: 'Home',
@@ -18,27 +15,18 @@ export const revalidate = 60
 
 async function getFeaturedBlogs() {
   try {
-    await dbConnect()
-    const blogs = await Blog.find({ status: 'published' })
-      .sort({ publishedAt: -1, createdAt: -1 })
-      .limit(3)
-      .select('title slug excerpt category featuredImage readingTime author')
-      .lean()
+    const blogs = await prisma.blog.findMany({
+      where: { status: 'published' },
+      include: { author: true },
+      orderBy: [{ publishedAt: 'desc' }, { createdAt: 'desc' }],
+      take: 3,
+    })
     
-    // Manually fetch authors
-    const authorIds = blogs.map((b: any) => b.author).filter(Boolean)
-    let authors: any[] = []
-    if (authorIds.length > 0) {
-      authors = await User.find({ _id: { $in: authorIds } })
-        .select('name avatar')
-        .lean()
-    }
-    const authorMap = new Map(authors.map((a: any) => [a._id.toString(), a]))
-    
-    return blogs.map((blog: any) => {
-      const author = blog.author ? authorMap.get(blog.author.toString()) : null
+    return blogs.map((rawBlog: any) => {
+      const blog = serializeBlog(rawBlog) as any
+      const author = blog.author && typeof blog.author === 'object' ? blog.author : null
       return {
-        _id: blog._id.toString(),
+        _id: blog._id,
         title: blog.title,
         slug: blog.slug,
         excerpt: blog.excerpt,
@@ -59,24 +47,26 @@ async function getFeaturedBlogs() {
 
 async function getFeaturedProducts() {
   try {
-    await dbConnect()
-    const products = await Product.find({ status: 'active' })
-      .sort({ publishedAt: -1, createdAt: -1 })
-      .limit(3)
-      .select('name slug summary type price currency coverImage rating')
-      .lean()
+    const products = await prisma.product.findMany({
+      where: { status: 'active' },
+      orderBy: [{ publishedAt: 'desc' }, { createdAt: 'desc' }],
+      take: 3,
+    })
     
-    return products.map((product: any) => ({
-      _id: product._id.toString(),
-      name: product.name,
-      slug: product.slug,
-      summary: product.summary,
-      type: product.type,
-      price: product.price,
-      currency: product.currency,
-      coverImage: product.coverImage,
-      rating: product.rating || 4.5,
-    }))
+    return products.map((rawProduct: any) => {
+      const product = serializeProduct(rawProduct) as any
+      return {
+        _id: product._id,
+        name: product.name,
+        slug: product.slug,
+        summary: product.summary,
+        type: product.type,
+        price: product.price,
+        currency: product.currency,
+        coverImage: product.coverImage,
+        rating: product.rating || 4.5,
+      }
+    })
   } catch (error) {
     console.error('Error fetching products:', error)
     return []

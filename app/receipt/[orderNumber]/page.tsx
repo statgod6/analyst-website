@@ -1,7 +1,5 @@
 import { notFound } from 'next/navigation'
-import dbConnect from '@/lib/mongodb'
-import Order from '@/models/Order'
-import Product from '@/models/Product'
+import { prisma, serializeOrder, serializeProduct } from '@/lib/db'
 import ReceiptView from '@/components/receipt/ReceiptView'
 
 interface ReceiptPageProps {
@@ -12,19 +10,16 @@ interface ReceiptPageProps {
 
 async function getOrderDetails(orderNumber: string) {
   try {
-    await dbConnect()
-    const orderData = await Order.findOne({ orderNumber }).lean()
+    const order = await prisma.order.findUnique({
+      where: { orderNumber },
+      include: { product: true },
+    })
     
-    if (!orderData || Array.isArray(orderData)) return null
-
-    // Type assertion for single document
-    const order: any = orderData
-
-    const product = await Product.findById(order.productId).lean()
+    if (!order) return null
 
     return {
-      order: JSON.parse(JSON.stringify(order)),
-      product: product ? JSON.parse(JSON.stringify(product)) : null,
+      order: serializeOrder(order),
+      product: order.product ? serializeProduct(order.product, { includeFileUrl: false }) : null,
     }
   } catch (error) {
     console.error('Error fetching order details:', error)

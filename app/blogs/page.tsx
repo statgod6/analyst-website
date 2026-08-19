@@ -4,9 +4,7 @@ import { Search, Filter } from 'lucide-react'
 import BlogCard from '@/components/blog/BlogCard'
 import BlogFilters from '@/components/blog/BlogFilters'
 import DatabaseError from '@/components/DatabaseError'
-import dbConnect from '@/lib/mongodb'
-import Blog from '@/models/Blog'
-import User from '@/models/User'
+import { prisma, serializeBlog } from '@/lib/db'
 
 export const metadata: Metadata = {
   title: 'AI Guides & Tips Blog | Learn AIE for Everyone',
@@ -16,16 +14,13 @@ export const metadata: Metadata = {
 
 // Enable ISR with 60 second revalidation
 export const revalidate = 60
+export const dynamic = 'force-dynamic'
 
 // Fetch blogs from database
 async function getBlogs(searchParams: any) {
   try {
-    await dbConnect()
-
-    // Build query - only fetch published blogs
     const query: any = { status: 'published' }
 
-    // Filter by category if provided
     if (searchParams.category) {
       const categoryMap: { [key: string]: string } = {
         'ai-tools-platforms': 'AI Tools & Platforms',
@@ -42,45 +37,25 @@ async function getBlogs(searchParams: any) {
       }
     }
 
-    // Search functionality
     if (searchParams.search) {
-      query.$or = [
-        { title: { $regex: searchParams.search, $options: 'i' } },
-        { excerpt: { $regex: searchParams.search, $options: 'i' } },
-        { tags: { $in: [new RegExp(searchParams.search, 'i')] } }
+      query.OR = [
+        { title: { contains: searchParams.search } },
+        { excerpt: { contains: searchParams.search } },
+        { tags: { contains: searchParams.search } },
       ]
     }
 
-    // Fetch blogs from database
-    const blogs = await Blog.find(query)
-      .sort({ publishedAt: -1, createdAt: -1 })
-      .select('title slug excerpt category tags featuredImage imageAlt publishedAt createdAt readingTime views author')
-      .lean()
+    const blogs = await prisma.blog.findMany({
+      where: query,
+      include: { author: true },
+      orderBy: [{ publishedAt: 'desc' }, { createdAt: 'desc' }],
+    })
 
-    console.log('📊 Blogs found:', blogs.length)
-    console.log('📋 First blog:', blogs[0] ? {
-      title: blogs[0].title,
-      category: blogs[0].category,
-      status: 'published',
-      publishedAt: blogs[0].publishedAt
-    } : 'No blogs')
-
-    // Manually fetch authors if needed
-    const blogIds = blogs.map((b: any) => b.author).filter(Boolean)
-    let authors: any[] = []
-    if (blogIds.length > 0) {
-      authors = await User.find({ _id: { $in: blogIds } })
-        .select('name email')
-        .lean()
-    }
-    
-    const authorMap = new Map(authors.map((a: any) => [a._id.toString(), a]))
-
-    // Transform data for frontend
-    return blogs.map((blog: any) => {
-      const author = blog.author ? authorMap.get(blog.author.toString()) : null
+    return blogs.map((rawBlog: any) => {
+      const blog = serializeBlog(rawBlog) as any
+      const author = blog.author && typeof blog.author === 'object' ? blog.author : null
       return {
-        _id: blog._id.toString(),
+        _id: blog._id,
         title: blog.title,
         slug: blog.slug,
         excerpt: blog.excerpt || blog.title.substring(0, 150) + '...',
@@ -116,12 +91,16 @@ export default async function BlogsPage({
   let hasDbError = false
   
   try {
-    await dbConnect()
-    categoryCounts = await Blog.aggregate([
-      { $match: { status: 'published' } },
-      { $group: { _id: '$category', count: { $sum: 1 } } }
-    ])
-    totalBlogs = await Blog.countDocuments({ status: 'published' })
+    const publishedBlogs = await prisma.blog.findMany({
+      where: { status: 'published' },
+      select: { category: true },
+    })
+    const counts = publishedBlogs.reduce((acc: Record<string, number>, blog: { category: string }) => {
+      acc[blog.category] = (acc[blog.category] || 0) + 1
+      return acc
+    }, {})
+    categoryCounts = Object.entries(counts).map(([category, count]) => ({ category, count }))
+    totalBlogs = publishedBlogs.length
   } catch (error) {
     console.error('Error fetching category counts:', error)
     hasDbError = true
@@ -134,7 +113,7 @@ export default async function BlogsPage({
 
   const categoryMap: { [key: string]: number } = {}
   categoryCounts.forEach((cat: any) => {
-    categoryMap[cat._id] = cat.count
+    categoryMap[cat.category] = cat.count
   })
 
   const categories = [
@@ -188,7 +167,7 @@ export default async function BlogsPage({
           ) : (
             <>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                {blogs.map((blog) => (
+                {blogs.map((blog: any) => (
                   <BlogCard key={blog._id} blog={blog} />
                 ))}
               </div>

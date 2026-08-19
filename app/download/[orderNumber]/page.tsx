@@ -2,14 +2,12 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { Download, CheckCircle, FileText, AlertCircle, Home } from 'lucide-react'
-import dbConnect from '@/lib/mongodb'
-import Order from '@/models/Order'
+import { prisma, serializeOrder } from '@/lib/db'
 
 async function getOrder(orderNumber: string) {
   try {
-    await dbConnect()
-    const order = await Order.findOne({ orderNumber }).lean()
-    return order ? JSON.parse(JSON.stringify(order)) : null
+    const order = await prisma.order.findUnique({ where: { orderNumber } })
+    return order ? serializeOrder(order) : null
   } catch (error) {
     console.error('Error fetching order:', error)
     return null

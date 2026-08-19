@@ -1,0 +1,146 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("viewer")
+  avatar    String?
+  bio       String?
+  blogs     Blog[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Blog {
+  id                 String    @id @default(cuid())
+  title              String
+  slug               String    @unique
+  metaTitle          String?
+  metaDescription    String?
+  keywords           String    @default("[]")
+  ogImage            String?
+  excerpt            String?
+  content            String
+  featuredImage      String
+  imageAlt           String?
+  category           String
+  tags               String    @default("[]")
+  sections           String    @default("[]")
+  internalLinks      String    @default("[]")
+  externalReferences String    @default("[]")
+  authorId           String?
+  author             User?     @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  status             String    @default("draft")
+  publishedAt        DateTime?
+  readingTime        Int       @default(0)
+  views              Int       @default(0)
+  relatedPosts       String    @default("[]")
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  @@index([category, status])
+  @@index([publishedAt])
+  @@index([authorId])
+}
+
+model Product {
+  id                String    @id @default(cuid())
+  name              String
+  slug              String    @unique
+  metaTitle         String?
+  metaDescription   String?
+  keywords          String    @default("[]")
+  type              String
+  description       String
+  summary           String?
+  valuePropositions String    @default("[]")
+  features          String    @default("[]")
+  targetAudience    String?
+  coverImage        String
+  previewImages     String    @default("[]")
+  samplePDF         String?
+  price             Float
+  currency          String    @default("USD")
+  discountActive    Boolean   @default(false)
+  discountPercentage Float    @default(0)
+  discountExpiresAt DateTime?
+  fileUrl           String
+  fileSize          String?
+  fileFormat        String    @default("PDF")
+  pageCount         Int       @default(0)
+  testimonials      String    @default("[]")
+  purchaseCount     Int       @default(0)
+  rating            Float     @default(0)
+  status            String    @default("active")
+  publishedAt       DateTime?
+  orders            Order[]
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@index([status])
+  @@index([type])
+}
+
+model Order {
+  id                String    @id @default(cuid())
+  orderNumber       String    @unique
+  razorpayOrderId   String
+  razorpayPaymentId String
+  razorpaySignature String
+  customerEmail     String?
+  customerName      String?
+  customerPhone     String?
+  productId         String?
+  product           Product?  @relation(fields: [productId], references: [id], onDelete: SetNull)
+  productName       String
+  amount            Float
+  currency          String    @default("INR")
+  paymentStatus     String    @default("pending")
+  downloadUrl       String
+  downloadCount     Int       @default(0)
+  lastDownloadedAt  DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@index([customerEmail, createdAt])
+  @@index([paymentStatus, createdAt])
+  @@index([productId])
+  @@index([razorpayPaymentId])
+}
+
+model Contact {
+  id           String   @id @default(cuid())
+  name         String
+  email        String
+  organization String?
+  inquiryType  String
+  budget       String?
+  message      String
+  status       String   @default("new")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([email])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model Newsletter {
+  id             String    @id @default(cuid())
+  email          String    @unique
+  status         String    @default("subscribed")
+  source         String    @default("website")
+  subscribedAt   DateTime  @default(now())
+  unsubscribedAt DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}

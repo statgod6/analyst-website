@@ -10,8 +10,7 @@ import SocialProofStats from '@/components/product/SocialProofStats'
 import ProductImageGallery from '@/components/product/ProductImageGallery'
 import FAQSection from '@/components/product/FAQSection'
 import Script from 'next/script'
-import dbConnect from '@/lib/mongodb'
-import Product from '@/models/Product'
+import { prisma, serializeProduct } from '@/lib/db'
 
 interface ProductDoc {
   _id: any
@@ -43,15 +42,15 @@ export const revalidate = 60
 
 async function getProductBySlug(slug: string) {
   try {
-    await dbConnect()
-    const product: ProductDoc | null = (await Product.findOne({ slug, status: 'active' }).lean()) as any
+    const rawProduct = await prisma.product.findFirst({ where: { slug, status: 'active' } })
 
-    if (!product) {
+    if (!rawProduct) {
       return null
     }
 
+    const product = serializeProduct(rawProduct) as any
     return {
-      _id: product._id.toString(),
+      _id: product._id,
       name: product.name,
       slug: product.slug,
       metaTitle: product.metaTitle,

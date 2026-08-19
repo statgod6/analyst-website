@@ -6,9 +6,7 @@ import { format } from 'date-fns'
 import BlogCard from '@/components/blog/BlogCard'
 import AuthorImage from '@/components/blog/AuthorImage'
 import DatabaseError from '@/components/DatabaseError'
-import dbConnect from '@/lib/mongodb'
-import Blog from '@/models/Blog'
-import User from '@/models/User'
+import { prisma, serializeBlog } from '@/lib/db'
 
 // Enable ISR with 60 second revalidation
 export const revalidate = 60
@@ -16,29 +14,20 @@ export const revalidate = 60
 // Fetch blog from database
 async function getBlogBySlug(slug: string) {
   try {
-    await dbConnect()
+    const blogData = await prisma.blog.findFirst({
+      where: { slug, status: 'published' },
+      include: { author: true },
+    })
 
-    const blogData = await Blog.findOne({ slug, status: 'published' })
-      .select('title slug metaTitle metaDescription keywords ogImage excerpt content featuredImage imageAlt category tags publishedAt createdAt readingTime views author sections internalLinks externalReferences')
-      .lean()
-
-    if (!blogData || Array.isArray(blogData)) {
+    if (!blogData) {
       return null
     }
 
-    // Type assertion to ensure TypeScript knows this is a single document
-    const blog: any = blogData
-
-    // Manually fetch author if exists
-    let authorData: any = null
-    if (blog.author) {
-      authorData = await User.findById(blog.author)
-        .select('name email avatar bio')
-        .lean()
-    }
+    const blog: any = serializeBlog(blogData)
+    const authorData = blog.author && typeof blog.author === 'object' ? blog.author : null
 
     return {
-      _id: blog._id.toString(),
+      _id: blog._id,
       title: blog.title,
       slug: blog.slug,
       metaTitle: blog.metaTitle || blog.title,
@@ -55,11 +44,11 @@ async function getBlogBySlug(slug: string) {
       readingTime: blog.readingTime || 5,
       views: blog.views || 0,
       author: {
-        _id: (authorData as any)?._id?.toString() || 'default',
-        name: (authorData as any)?.name || 'Abhinav',
-        email: (authorData as any)?.email,
-        avatar: (authorData as any)?.avatar || '/images/author-abhinav.jpg',
-        bio: (authorData as any)?.bio || 'Dr. Abhinav is a dedicated scholar, educator, and researcher specializing in marketing, analytics, and artificial intelligence. As both a PhD and professor, he brings a unique blend of academic rigor and practical insight to his work, guiding students and professionals toward data-driven decision-making in an increasingly digital world.\n\nPassionate about making knowledge accessible to everyone, Dr. Abhinav\'s mission is to empower individuals with the tools and understanding needed to thrive in the age of AI and analytics. His contributions to the field have been recognized with numerous awards for excellence in research, teaching, and innovation.\n\nDriven by curiosity and purpose, he continues to explore how technology, data, and human behavior intersect to shape the future of marketing and education.',
+        _id: authorData?._id || 'default',
+        name: authorData?.name || 'Abhinav',
+        email: authorData?.email,
+        avatar: authorData?.avatar || '/images/author-abhinav.jpg',
+        bio: authorData?.bio || 'Dr. Abhinav is a dedicated scholar, educator, and researcher specializing in marketing, analytics, and artificial intelligence. As both a PhD and professor, he brings a unique blend of academic rigor and practical insight to his work, guiding students and professionals toward data-driven decision-making in an increasingly digital world.\n\nPassionate about making knowledge accessible to everyone, Dr. Abhinav\'s mission is to empower individuals with the tools and understanding needed to thrive in the age of AI and analytics. His contributions to the field have been recognized with numerous awards for excellence in research, teaching, and innovation.\n\nDriven by curiosity and purpose, he continues to explore how technology, data, and human behavior intersect to shape the future of marketing and education.',
       },
       sections: blog.sections || [],
       internalLinks: blog.internalLinks || [],
@@ -67,43 +56,27 @@ async function getBlogBySlug(slug: string) {
     }
   } catch (error) {
     console.error('Error fetching blog:', error)
-    // Return null instead of crashing
     return null
   }
 }
 
 async function getRelatedBlogs(currentBlogId: string, category: string) {
   try {
-    await dbConnect()
-
-    // Single optimized query using $or to get all 3 blogs at once
-    const relatedBlogs = await Blog.find({
-      _id: { $ne: currentBlogId },
-      status: 'published',
-      $or: [
-        { category: category },
-        { category: { $ne: category } }
-      ]
+    const relatedBlogs = await prisma.blog.findMany({
+      where: { id: { not: currentBlogId }, status: 'published' },
+      include: { author: true },
+      orderBy: [
+        { category: 'asc' },
+        { publishedAt: 'desc' },
+      ],
+      take: 3,
     })
-      .sort({ publishedAt: -1 })
-      .limit(3)
-      .select('title slug excerpt category tags featuredImage publishedAt createdAt readingTime views author')
-      .lean()
 
-    // Manually fetch authors for all related blogs
-    const authorIds = relatedBlogs.map((b: any) => b.author).filter(Boolean)
-    let authors: any[] = []
-    if (authorIds.length > 0) {
-      authors = await User.find({ _id: { $in: authorIds } })
-        .select('name avatar bio')
-        .lean()
-    }
-    const authorMap = new Map(authors.map((a: any) => [a._id.toString(), a]))
-
-    return relatedBlogs.map((blog: any) => {
-      const author = blog.author ? authorMap.get(blog.author.toString()) : null
+    return relatedBlogs.map((rawBlog: any) => {
+      const blog = serializeBlog(rawBlog) as any
+      const author = blog.author && typeof blog.author === 'object' ? blog.author : null
       return {
-        _id: blog._id.toString(),
+        _id: blog._id,
         title: blog.title,
         slug: blog.slug,
         excerpt: blog.excerpt || blog.title.substring(0, 150) + '...',
@@ -122,7 +95,6 @@ async function getRelatedBlogs(currentBlogId: string, category: string) {
     })
   } catch (error) {
     console.error('Error fetching related blogs:', error)
-    // Return empty array instead of crashing
     return []
   }
 }
@@ -171,11 +143,10 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
   if (!blog) {
     // Check if it's a database error or just not found
     try {
-      await dbConnect()
-      // If dbConnect succeeds but blog is null, it's really not found
+      await prisma.$queryRaw`SELECT 1`
       notFound()
     } catch (error) {
-      // If dbConnect fails, show database error page
+      // If the SQLite health check fails, show database error page
       return <DatabaseError />
     }
   }

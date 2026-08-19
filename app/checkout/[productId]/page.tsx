@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation'
-import dbConnect from '@/lib/mongodb'
-import Product from '@/models/Product'
+import { prisma, serializeProduct } from '@/lib/db'
 import CheckoutForm from '@/components/checkout/CheckoutForm'
 
 interface CheckoutPageProps {
@@ -11,9 +10,8 @@ interface CheckoutPageProps {
 
 async function getProduct(id: string) {
   try {
-    await dbConnect()
-    const product = await Product.findById(id).lean()
-    return product ? JSON.parse(JSON.stringify(product)) : null
+    const product = await prisma.product.findUnique({ where: { id } })
+    return product ? serializeProduct(product, { includeFileUrl: false }) : null
   } catch (error) {
     console.error('Error fetching product:', error)
     return null
@@ -64,10 +62,10 @@ export default async function CheckoutPage({ params }: CheckoutPageProps) {
               </div>
               
               {/* Product Image */}
-              {product.images?.[0] && (
+              {product.previewImages?.[0] && (
                 <div className="mb-6 rounded-2xl overflow-hidden shadow-lg group">
                   <img
-                    src={product.images[0]}
+                    src={product.previewImages[0]}
                     alt={product.name}
                     className="w-full h-56 object-cover transform group-hover:scale-105 transition-transform duration-500"
                   />

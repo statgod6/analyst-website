@@ -1,38 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server'
-import dbConnect from '@/lib/mongodb'
-import Order from '@/models/Order'
 import { requireAdminAuth } from '@/lib/auth-helper'
+import { prisma } from '@/lib/db'
 
-// GET /api/admin/orders/export - Export orders as CSV
+export const dynamic = 'force-dynamic'
+
 export async function GET(request: NextRequest) {
   try {
-    // Verify admin authentication
     const auth = await requireAdminAuth()
-    if (auth.error) {
-      return NextResponse.json(
-        { message: auth.message },
-        { status: auth.status }
-      )
-    }
-
-    await dbConnect()
+    if (auth.error) return NextResponse.json({ message: auth.message }, { status: auth.status })
 
     const { searchParams } = new URL(request.url)
     const status = searchParams.get('status')
+    const where: any = {}
+    if (status && status !== 'all') where.paymentStatus = status
 
-    // Build query
-    const query: any = {}
-    if (status && status !== 'all') {
-      query.paymentStatus = status
-    }
+    const orders = await prisma.order.findMany({
+      where,
+      include: { product: { select: { name: true } } },
+      orderBy: { createdAt: 'desc' },
+    })
 
-    // Fetch all orders matching the criteria
-    const orders = await Order.find(query)
-      .sort({ createdAt: -1 })
-      .populate('productId', 'name')
-      .lean()
-
-    // Create CSV content
     const csvHeaders = [
       'Order Number',
       'Customer Name',
@@ -47,28 +34,22 @@ export async function GET(request: NextRequest) {
       'Last Downloaded'
     ]
 
-    const csvRows = orders.map((order: any) => {
-      return [
-        order.orderNumber,
-        order.customerName || 'N/A',
-        order.customerEmail || 'N/A',
-        order.customerPhone || 'N/A',
-        order.productName,
-        order.amount,
-        order.currency,
-        order.paymentStatus,
-        order.downloadCount || 0,
-        new Date(order.createdAt).toISOString(),
-        order.lastDownloadedAt ? new Date(order.lastDownloadedAt).toISOString() : 'Never'
-      ].map(field => `"${field}"`).join(',')
-    })
+    const csvRows = orders.map((order: any) => [
+      order.orderNumber,
+      order.customerName || 'N/A',
+      order.customerEmail || 'N/A',
+      order.customerPhone || 'N/A',
+      order.productName,
+      order.amount,
+      order.currency,
+      order.paymentStatus,
+      order.downloadCount || 0,
+      new Date(order.createdAt).toISOString(),
+      order.lastDownloadedAt ? new Date(order.lastDownloadedAt).toISOString() : 'Never'
+    ].map(field => `"${String(field).replace(/"/g, '""')}"`).join(','))
 
-    const csvContent = [
-      csvHeaders.join(','),
-      ...csvRows
-    ].join('\n')
+    const csvContent = [csvHeaders.join(','), ...csvRows].join('\n')
 
-    // Return CSV file
     return new Response(csvContent, {
       status: 200,
       headers: {

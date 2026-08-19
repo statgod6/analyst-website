@@ -1,66 +1,66 @@
 import { NextRequest, NextResponse } from 'next/server'
-import dbConnect from '@/lib/mongodb'
-import Order from '@/models/Order'
 import { requireAdminAuth } from '@/lib/auth-helper'
+import { prisma } from '@/lib/db'
 
-// GET /api/admin/customers - Get all customers with their order history
+export const dynamic = 'force-dynamic'
+
 export async function GET(request: NextRequest) {
   try {
-    // Verify admin authentication
     const auth = await requireAdminAuth()
-    if (auth.error) {
-      return NextResponse.json(
-        { message: auth.message },
-        { status: auth.status }
-      )
-    }
-
-    await dbConnect()
+    if (auth.error) return NextResponse.json({ message: auth.message }, { status: auth.status })
 
     const { searchParams } = new URL(request.url)
     const search = searchParams.get('search')
 
-    // Aggregate customers from orders
-    const matchStage: any = { paymentStatus: 'completed' }
-    
+    const where: any = { paymentStatus: 'completed' }
     if (search) {
-      matchStage.$or = [
-        { customerEmail: { $regex: search, $options: 'i' } },
-        { customerName: { $regex: search, $options: 'i' } },
+      where.OR = [
+        { customerEmail: { contains: search } },
+        { customerName: { contains: search } },
       ]
     }
 
-    const customers = await Order.aggregate([
-      { $match: matchStage },
-      {
-        $group: {
-          _id: '$customerEmail',
-          customerName: { $first: '$customerName' },
-          customerEmail: { $first: '$customerEmail' },
-          customerPhone: { $first: '$customerPhone' },
-          totalOrders: { $sum: 1 },
-          totalSpent: { $sum: '$amount' },
-          products: { $push: '$productName' },
-          lastOrderDate: { $max: '$createdAt' },
-          firstOrderDate: { $min: '$createdAt' },
-        }
-      },
-      { $sort: { totalSpent: -1 } }
-    ])
+    const orders = await prisma.order.findMany({
+      where,
+      orderBy: { createdAt: 'asc' },
+    })
 
-    // Get overall stats
-    const stats = {
-      totalCustomers: customers.length,
-      totalRevenue: customers.reduce((sum, c) => sum + c.totalSpent, 0),
-      averageOrderValue: customers.length > 0 
-        ? customers.reduce((sum, c) => sum + c.totalSpent, 0) / customers.reduce((sum, c) => sum + c.totalOrders, 0)
-        : 0,
+    const customerMap = new Map<string, any>()
+    for (const order of orders) {
+      const key = order.customerEmail || 'unknown'
+      const existing = customerMap.get(key)
+      if (!existing) {
+        customerMap.set(key, {
+          _id: key,
+          customerName: order.customerName,
+          customerEmail: order.customerEmail,
+          customerPhone: order.customerPhone,
+          totalOrders: 1,
+          totalSpent: order.amount,
+          products: [order.productName],
+          firstOrderDate: order.createdAt,
+          lastOrderDate: order.createdAt,
+        })
+      } else {
+        existing.totalOrders += 1
+        existing.totalSpent += order.amount
+        existing.products.push(order.productName)
+        existing.lastOrderDate = order.createdAt > existing.lastOrderDate ? order.createdAt : existing.lastOrderDate
+      }
     }
+
+    const customers = Array.from(customerMap.values()).sort((a, b) => b.totalSpent - a.totalSpent)
+    const totalRevenue = customers.reduce((sum, customer) => sum + customer.totalSpent, 0)
+    const totalOrders = customers.reduce((sum, customer) => sum + customer.totalOrders, 0)
 
     return NextResponse.json(
       {
         customers,
-        stats,
+        stats: {
+          totalCustomers: customers.length,
+          totalRevenue,
+          averageOrderValue: totalOrders > 0 ? totalRevenue / totalOrders : 0,
+        },
       },
       { status: 200 }
     )

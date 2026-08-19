@@ -2,8 +2,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { ShoppingCart, Download, FileText, BookOpen, Award } from 'lucide-react'
 import ProductCard from '@/components/product/ProductCard'
-import dbConnect from '@/lib/mongodb'
-import Product from '@/models/Product'
+import { prisma, serializeProduct } from '@/lib/db'
 
 export const metadata: Metadata = {
   title: 'AI Prompts & Guides | Premium AI Resources',
@@ -16,30 +15,32 @@ export const revalidate = 60
 
 async function getProducts() {
   try {
-    await dbConnect()
-    const products = await Product.find({ status: 'active' })
-      .sort({ publishedAt: -1, createdAt: -1 })
-      .limit(100)
-      .select('-fileUrl')
-      .lean()
+    const products = await prisma.product.findMany({
+      where: { status: 'active' },
+      orderBy: [{ publishedAt: 'desc' }, { createdAt: 'desc' }],
+      take: 100,
+    })
 
-    return products.map((product: any) => ({
-      _id: product._id.toString(),
-      name: product.name,
-      slug: product.slug,
-      summary: product.summary,
-      type: product.type,
-      price: product.price,
-      currency: product.currency,
-      coverImage: product.coverImage,
-      rating: product.rating,
-      purchaseCount: product.purchaseCount,
-      valuePropositions: product.valuePropositions,
-      pageCount: product.pageCount,
-      fileFormat: product.fileFormat,
-      fileSize: product.fileSize,
-      status: product.status,
-    }))
+    return products.map((rawProduct: any) => {
+      const product = serializeProduct(rawProduct) as any
+      return {
+        _id: product._id,
+        name: product.name,
+        slug: product.slug,
+        summary: product.summary,
+        type: product.type,
+        price: product.price,
+        currency: product.currency,
+        coverImage: product.coverImage,
+        rating: product.rating,
+        purchaseCount: product.purchaseCount,
+        valuePropositions: product.valuePropositions,
+        pageCount: product.pageCount,
+        fileFormat: product.fileFormat,
+        fileSize: product.fileSize,
+        status: product.status,
+      }
+    })
   } catch (error) {
     console.error('Error fetching products:', error)
     return []
